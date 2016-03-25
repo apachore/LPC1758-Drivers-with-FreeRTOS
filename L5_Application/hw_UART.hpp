@@ -16,13 +16,13 @@
 
 
 #define baud_rate 9600
-#define uart_x 2
+#define uart_x 3
 
 bool data_received_flag = 0;
 
 extern "C"
 {
-void UART2_IRQHandler(void)//Original UART3_IRQHandler from uart3.cpp is commented
+void UART2_IRQHandler(void)//Original UART2_IRQHandler from uart2.cpp is commented
 {
     LE.toggle(1);
     QueueHandle_t UART_Rec_Buff = scheduler_task::getSharedObject("UART_Receive_Q");
@@ -118,7 +118,7 @@ class UARTTask : public scheduler_task
 
                 //Pin Selection from MUX
                 LPC_PINCON -> PINSEL9 &= ~(0xF << 24);
-                LPC_PINCON -> PINSEL9 |= (0xA << 24);
+                LPC_PINCON -> PINSEL9 |= (0xF << 24);
                 //4.28,4.29, PINSEL9 24,25,26,27 - TXD3,RXD3 - F - for UART 3
 
                 //Interrupt Initialization
